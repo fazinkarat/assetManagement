@@ -1,5 +1,3 @@
-// assets.js
-
 document.addEventListener('DOMContentLoaded', function() {
     const assetsList = document.getElementById('assetsList');
 

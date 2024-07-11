@@ -13,22 +13,15 @@ document.getElementById('addItemForm').addEventListener('submit', function(event
         date: date
     };
 
-    console.log('New item added:', newItem);
+    // Fetch existing items from local storage
+    let items = JSON.parse(localStorage.getItem('items')) || [];
 
-    // You can now send this data to your server or save it locally
-    // For example:
-    // fetch('/add-item', {
-    //     method: 'POST',
-    //     headers: {
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(newItem)
-    // }).then(response => response.json())
-    //   .then(data => {
-    //       console.log('Success:', data);
-    //   }).catch((error) => {
-    //       console.error('Error:', error);
-    //   });
+    // Add the new item to the list
+    items.push(newItem);
+
+    // Save the updated list to local storage
+    localStorage.setItem('items', JSON.stringify(items));
 
     alert('Item added successfully!');
+    window.location.href = 'index.html'; // Redirect to dashboard or desired page
 });
