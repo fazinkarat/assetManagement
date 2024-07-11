@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assets</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="assets.js" defer></script>
 </head>
 <body>
     <nav>
@@ -16,27 +17,23 @@
             <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <div class="container">
-        <h1>Assets</h1>
-        <table id="assetsTable">
-            <thead>
-                <tr>
-                    <th>Serial Number</th>
-                    <th>Name</th>
-                    <th>Model Number</th>
-                    <th>Quantity</th>
-                    <th>Purchase Date</th>
-                    <th>Date of Expiry</th>
-                    <th>Purchase Amount</th>
-                    <th>Total Amount</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="assetsList">
-                <!-- Items will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </div>
-    <script src="assets.js"></script>
+    <table>
+        <thead>
+            <tr>
+                <th>Serial Number</th>
+                <th>Name</th>
+                <th>Model</th>
+                <th>Quantity</th>
+                <th>Purchase Date</th>
+                <th>Expiry Date</th>
+                <th>Purchase Amount</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="assetsList">
+            <!-- Items will be populated here by assets.js -->
+        </tbody>
+    </table>
 </body>
 </html>

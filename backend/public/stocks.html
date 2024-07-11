@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Management</title>
+    <title>Stocks</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="stocks.js" defer></script>
 </head>
 <body>
     <nav>
@@ -12,29 +13,27 @@
             <li><a href="index.html">Dashboard</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
-            <li><a href="stocks.html">Stocks</a></li>
+            <li><a href="stocks.html">Stock</a></li>
             <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <div class="container">
-        <h1>Stocks</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Serial Number</th>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Quantity</th>
-                    <th>Purchase Date</th>
-                    <th>Date of Expiry</th>
-                    <th>Purchase Amount</th>
-                    <th>Total Amount</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="stocksList"></tbody>
-        </table>
-    </div>
-    <script src="stocks.js"></script>
+    <table>
+        <thead>
+            <tr>
+                <th>Serial Number</th>
+                <th>Name</th>
+                <th>Model</th>
+                <th>Quantity</th>
+                <th>Purchase Date</th>
+                <th>Expiry Date</th>
+                <th>Purchase Amount</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="stocksList">
+            <!-- Items will be populated here by stocks.js -->
+        </tbody>
+    </table>
 </body>
 </html>
