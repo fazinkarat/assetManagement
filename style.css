@@ -67,18 +67,11 @@ nav ul li a {
     background-color: #ff4c6d;
 }
 
-.accessories {
+.stocks {
     background-color: #ffb142;
 }
 
-.consumables {
+.item {
     background-color: #9b59b6;
 }
 
-.components {
-    background-color: #f39c12;
-}
-
-.people {
-    background-color: #3498db;
-}
