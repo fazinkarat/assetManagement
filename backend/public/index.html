@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Management</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <nav>
@@ -16,27 +17,9 @@
             <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <div class="dashboard">
-        <div class="card assets">
-            <h2>2,582</h2>
-            <p>assets</p>
-            <a href="#">view all</a>
-        </div>
-        <div class="card licenses">
-            <h2>1,371</h2>
-            <p>licenses</p>
-            <a href="#">view all</a>
-        </div>
-        <div class="card stocks">
-            <h2>6</h2>
-            <p>Stocks</p>
-            <a href="#">view all</a>
-        </div>
-        <div class="card item">
-            <h2>3</h2>
-            <p>Add New Item</p>
-            <a href="#">view all</a>
-        </div>
+    <div class="container">
+        <canvas id="myPieChart"></canvas>
     </div>
+    <script src="index.js"></script>
 </body>
 </html>

@@ -58,22 +58,6 @@ nav ul li a {
     color: #007bff;
     font-weight: bold;
 }
-
-.assets {
-    background-color: #30bced;
-}
-
-.licenses {
-    background-color: #ff4c6d;
-}
-
-.stocks {
-    background-color: #ffb142;
-}
-
-.item {
-    background-color: #9b59b6;
-}
 .container {
     max-width: 600px;
     margin: 0 auto;

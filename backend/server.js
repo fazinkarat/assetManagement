@@ -61,3 +61,34 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
+
+//
+app.get('/api/assets/total', async (req, res) => {
+    try {
+        const assets = await Asset.find({});
+        const totalAmount = assets.reduce((sum, asset) => sum + asset.totalAmount, 0);
+        res.json(totalAmount);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/licenses/total', async (req, res) => {
+    try {
+        const licenses = await License.find({});
+        const totalAmount = licenses.reduce((sum, license) => sum + license.totalAmount, 0);
+        res.json(totalAmount);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+app.get('/api/stocks/total', async (req, res) => {
+    try {
+        const stocks = await Stock.find({});
+        const totalAmount = stocks.reduce((sum, stock) => sum + stock.totalAmount, 0);
+        res.json(totalAmount);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
