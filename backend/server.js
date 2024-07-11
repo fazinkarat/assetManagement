@@ -1,33 +1,61 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const fs = require('fs');
+const path = require('path');
 const app = express();
 const port = 3000;
+const bodyParser = require('body-parser');
+
+// Temporary in-memory storage
+const items = [];
 
 app.use(bodyParser.json());
-app.use(cors());
 
-const dataFile = 'data.json';
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Initialize data file if not exists
-if (!fs.existsSync(dataFile)) {
-    fs.writeFileSync(dataFile, JSON.stringify({ items: [] }, null, 2));
-}
-
-// Read items
+// Get all items
 app.get('/items', (req, res) => {
-    const data = JSON.parse(fs.readFileSync(dataFile));
-    res.json(data.items);
+    res.json(items);
 });
 
-// Add item
+// Get an item by ID
+app.get('/items/:id', (req, res) => {
+    const item = items.find(i => i.id == req.params.id);
+    res.json(item);
+});
+
+// Add a new item
 app.post('/items', (req, res) => {
-    const newItem = req.body;
-    const data = JSON.parse(fs.readFileSync(dataFile));
-    data.items.push(newItem);
-    fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
+    const newItem = { id: Date.now(), ...req.body };
+    items.push(newItem);
     res.status(201).json(newItem);
+});
+
+// Update an item by ID
+app.put('/items/:id', (req, res) => {
+    const index = items.findIndex(i => i.id == req.params.id);
+    if (index !== -1) {
+        items[index] = { ...items[index], ...req.body };
+        res.json(items[index]);
+    } else {
+        res.status(404).json({ error: 'Item not found' });
+    }
+});
+
+// Delete an item by ID
+app.delete('/items/:id', (req, res) => {
+    const index = items.findIndex(i => i.id == req.params.id);
+    if (index !== -1) {
+        items.splice(index, 1);
+        res.status(204).send();
+    } else {
+        res.status(404).json({ error: 'Item not found' });
+    }
+});
+
+
+// Serve the main HTML file for the root URL
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.listen(port, () => {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stocks</title>
+    <title>Stock Management</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -18,12 +18,12 @@
     </nav>
     <div class="container">
         <h1>Stocks</h1>
-        <table id="stocksTable">
+        <table>
             <thead>
                 <tr>
                     <th>Serial Number</th>
                     <th>Name</th>
-                    <th>Model Number</th>
+                    <th>Model</th>
                     <th>Quantity</th>
                     <th>Purchase Date</th>
                     <th>Date of Expiry</th>
@@ -32,9 +32,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="stocksList">
-                <!-- Items will be populated here by JavaScript -->
-            </tbody>
+            <tbody id="stocksList"></tbody>
         </table>
     </div>
     <script src="stocks.js"></script>

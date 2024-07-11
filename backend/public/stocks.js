@@ -37,20 +37,22 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    function editItem(itemId) {
-        // Redirect to the edit page or open a modal for editing the item
+    window.editItem = function(itemId) {
         window.location.href = `edit.html?id=${itemId}`;
     }
 
-    function deleteItem(itemId) {
+    window.deleteItem = function(itemId) {
         if (confirm('Are you sure you want to delete this item?')) {
             fetch(`http://localhost:3000/items/${itemId}`, {
                 method: 'DELETE'
             })
-            .then(response => response.json())
-            .then(data => {
-                alert('Item deleted successfully');
-                fetchItems();
+            .then(response => {
+                if (response.status === 204) {
+                    alert('Item deleted successfully');
+                    fetchItems();
+                } else {
+                    alert('Error deleting item');
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
