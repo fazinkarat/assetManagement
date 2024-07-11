@@ -12,17 +12,26 @@
             <li><a href="index.html">Dashboard</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
-            <li><a href="stocks.html">Stocks</a></li>
+            <li><a href="stocks.html">Stock</a></li>
             <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
     <div class="container">
         <h1>Assets</h1>
-        <div id="assetsList">
-            <!-- List of assets will be rendered here -->
-        </div>
+        <table id="assetsTable">
+            <thead>
+                <tr>
+                    <th>Serial Number</th>
+                    <th>Name</th>
+                    <th>Model Number</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="assetsList">
+                <!-- Items will be populated here by JavaScript -->
+            </tbody>
+        </table>
     </div>
-
     <script src="assets.js"></script>
 </body>
 </html>
