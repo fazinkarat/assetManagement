@@ -1,4 +1,47 @@
-const Stock = require('../models/stockModel.js');
+const Stock = require('../models/stockModel');
 
-// Controller logic for stocks
-// Implement similar CRUD operations as shown for licenses
+exports.getAllStocks = async (req, res) => {
+    try {
+        const stocks = await Stock.find({});
+        res.json(stocks);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.getStockById = async (req, res) => {
+    try {
+        const stock = await Stock.findById(req.params.id);
+        res.json(stock);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.createStock = async (req, res) => {
+    try {
+        const newStock = new Stock(req.body);
+        const savedStock = await newStock.save();
+        res.status(201).json(savedStock);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.updateStock = async (req, res) => {
+    try {
+        const updatedStock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedStock);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+exports.deleteStock = async (req, res) => {
+    try {
+        await Stock.findByIdAndDelete(req.params.id);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};

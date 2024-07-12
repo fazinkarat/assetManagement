@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const licenseController = require('../controllers/licenseController');
 
-// Routes for licenses API
-router.get('/licenses', licenseController.getAllLicenses);
-router.get('/licenses/:id', licenseController.getLicenseById); // Fetch single license
-router.post('/licenses', licenseController.createLicense);
-router.put('/licenses/:id', licenseController.updateLicense); // Update license by ID
-router.delete('/licenses/:id', licenseController.deleteLicense); // Delete license by ID
+router.get('/', licenseController.getAllLicenses);
+router.get('/:id', licenseController.getLicenseById);
+router.post('/', licenseController.createLicense);
+router.put('/:id', licenseController.updateLicense);
+router.delete('/:id', licenseController.deleteLicense);
 
 module.exports = router;

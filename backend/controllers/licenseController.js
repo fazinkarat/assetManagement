@@ -1,57 +1,47 @@
 const License = require('../models/licenseModel');
 
-// Controller logic for licenses
 exports.getAllLicenses = async (req, res) => {
-  try {
-    const licenses = await License.find();
-    res.json(licenses);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-exports.createLicense = async (req, res) => {
-  const license = new License(req.body);
-  try {
-    const newLicense = await license.save();
-    res.status(201).json(newLicense);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
+    try {
+        const licenses = await License.find({});
+        res.json(licenses);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 exports.getLicenseById = async (req, res) => {
-  try {
-    const license = await License.findById(req.params.id);
-    if (!license) {
-      return res.status(404).json({ message: 'License not found' });
+    try {
+        const license = await License.findById(req.params.id);
+        res.json(license);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json(license);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+};
+
+exports.createLicense = async (req, res) => {
+    try {
+        const newLicense = new License(req.body);
+        const savedLicense = await newLicense.save();
+        res.status(201).json(savedLicense);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };
 
 exports.updateLicense = async (req, res) => {
-  try {
-    const updatedLicense = await License.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedLicense) {
-      return res.status(404).json({ message: 'License not found' });
+    try {
+        const updatedLicense = await License.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.json(updatedLicense);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json(updatedLicense);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
 };
 
 exports.deleteLicense = async (req, res) => {
-  try {
-    const deletedLicense = await License.findByIdAndDelete(req.params.id);
-    if (!deletedLicense) {
-      return res.status(404).json({ message: 'License not found' });
+    try {
+        await License.findByIdAndDelete(req.params.id);
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-    res.json({ message: 'License deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
 };

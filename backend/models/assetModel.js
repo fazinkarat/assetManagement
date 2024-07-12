@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
 
 const assetSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    model: { type: String, required: true },
-    quantity: { type: Number, default: 0 },
-    purchaseDate: { type: Date, default: null },
-    expiryDate: { type: Date, default: null },
-    purchaseAmount: { type: Number, default: 0 },
-    totalAmount: { type: Number, default: 0 }
+    name: String,
+    model: String,
+    location: String,
+    purchaseDate: Date,
+    expiryDate: Date,
+    serialNumber: String,
+    quantity: Number // Add this field if it doesn't exist
 });
 
-module.exports = mongoose.model('Asset', assetSchema);
+const Asset = mongoose.model('Asset', assetSchema);
+module.exports = Asset;
