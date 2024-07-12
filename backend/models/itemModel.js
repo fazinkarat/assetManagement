@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const itemSchema = new mongoose.Schema({
-    name: String,
+const itemSchema = new Schema({
+    type: { type: String, required: true },
+    name: { type: String, required: true },
     model: String,
-    location: String,
     purchaseDate: Date,
     expiryDate: Date,
-    serialNumber: String,
-    quantity: Number // Add this field if it doesn't exist
+    purchaseAmount: Number,
+    quantity: Number,
+    totalAmount: Number,
+    licenseId: String
 });
 
-const Item = mongoose.model('Item', itemSchema);
-module.exports = Item;
+module.exports = mongoose.model('Item', itemSchema);

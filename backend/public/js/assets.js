@@ -1,15 +1,19 @@
-document.addEventListener('DOMContentLoaded', async function () {
-    const response = await fetch('/api/assets');
-    const assets = await response.json();
-
-    const assetsTable = document.getElementById('assetsTable').getElementsByTagName('tbody')[0];
-    assets.forEach(asset => {
-        const row = assetsTable.insertRow();
-        row.insertCell(0).textContent = asset.name;
-        row.insertCell(1).textContent = asset.model;
-        row.insertCell(2).textContent = asset.location;
-        row.insertCell(3).textContent = asset.purchaseDate;
-        row.insertCell(4).textContent = asset.licenseExpiryDate;
-        row.insertCell(5).textContent = asset.serialNumber;
-    });
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/api/assets')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('assetTableBody');
+            data.forEach(asset => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${asset.name}</td>
+                    <td>${asset.model}</td>
+                    <td>${new Date(asset.purchaseDate).toLocaleDateString()}</td>
+                    <td>${new Date(asset.expiryDate).toLocaleDateString()}</td>
+                    <td>${asset.purchaseAmount}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching assets:', error));
 });

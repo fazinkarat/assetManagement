@@ -3,45 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Item</title>
+    <title>Add New Item</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
             <li><a href="stocks.html">Stocks</a></li>
-            <li><a href="item.html">Add Item</a></li>
+            <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <main>
-        <h1>Add New Item</h1>
-        <form id="addItemForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-            <label for="model">Model:</label>
-            <input type="text" id="model" name="model">
-            <label for="location">Location:</label>
-            <input type="text" id="location" name="location">
-            <label for="purchaseDate">Purchase Date:</label>
-            <input type="date" id="purchaseDate" name="purchaseDate">
-            <label for="expiryDate">License Expiry Date:</label>
-            <input type="date" id="expiryDate" name="expiryDate">
-            <label for="serialNumber">Serial Number:</label>
-            <input type="text" id="serialNumber" name="serialNumber">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" min="0">
-            <label for="type">Type:</label>
-            <select id="type" name="type">
-                <option value="asset">Asset</option>
-                <option value="license">License</option>
-                <option value="stock">Stock</option>
-            </select>
-            <button type="submit">Add Item</button>
-        </form>
-    </main>
-    <script src="js/item.js"></script>
+    <h1>Add New Item</h1>
+    <form id="itemForm">
+        <label for="itemType">Item Type:</label>
+        <select id="itemType" name="itemType" required>
+            <option value="" disabled selected>Select an option</option>
+            <option value="asset">Asset</option>
+            <option value="license">License</option>
+            <option value="stock">Stock</option>
+        </select>
+        <div id="fieldsContainer"></div>
+        <button type="submit">Add Item</button>
+    </form>
+    <script src="js/script.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@ const Stock = require('../models/stockModel');
 
 exports.getAllStocks = async (req, res) => {
     try {
-        const stocks = await Stock.find({});
+        const stocks = await Stock.find();
         res.json(stocks);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
@@ -12,7 +12,11 @@ exports.getAllStocks = async (req, res) => {
 exports.getStockById = async (req, res) => {
     try {
         const stock = await Stock.findById(req.params.id);
-        res.json(stock);
+        if (stock) {
+            res.json(stock);
+        } else {
+            res.status(404).json({ error: 'Stock not found' });
+        }
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -21,26 +25,34 @@ exports.getStockById = async (req, res) => {
 exports.createStock = async (req, res) => {
     try {
         const newStock = new Stock(req.body);
-        const savedStock = await newStock.save();
-        res.status(201).json(savedStock);
+        await newStock.save();
+        res.status(201).json(newStock);
     } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(400).json({ error: 'Bad Request' });
     }
 };
 
 exports.updateStock = async (req, res) => {
     try {
         const updatedStock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.json(updatedStock);
+        if (updatedStock) {
+            res.json(updatedStock);
+        } else {
+            res.status(404).json({ error: 'Stock not found' });
+        }
     } catch (error) {
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(400).json({ error: 'Bad Request' });
     }
 };
 
 exports.deleteStock = async (req, res) => {
     try {
-        await Stock.findByIdAndDelete(req.params.id);
-        res.status(204).send();
+        const deletedStock = await Stock.findByIdAndDelete(req.params.id);
+        if (deletedStock) {
+            res.status(204).send();
+        } else {
+            res.status(404).json({ error: 'Stock not found' });
+        }
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }

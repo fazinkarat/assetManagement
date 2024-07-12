@@ -1,40 +1,131 @@
-document.addEventListener('DOMContentLoaded', async function () {
-    const response = await fetch('/api/assets/total');
-    const assetsTotal = await response.json();
+document.addEventListener('DOMContentLoaded', () => {
+    // Event listener for selecting the item type
+    const itemTypeSelect = document.getElementById('itemType');
+    if (itemTypeSelect) {
+        itemTypeSelect.addEventListener('change', handleItemTypeChange);
+    }
 
-    const response2 = await fetch('/api/licenses/total');
-    const licensesTotal = await response2.json();
+    // Event listener for form submission
+    const itemForm = document.getElementById('itemForm');
+    if (itemForm) {
+        itemForm.addEventListener('submit', handleFormSubmit);
+    }
 
-    const response3 = await fetch('/api/stocks/total');
-    const stocksTotal = await response3.json();
-
-    const ctx = document.getElementById('barChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Assets', 'Licenses', 'Stocks'],
-            datasets: [{
-                label: 'Total Quantity',
-                data: [assetsTotal, licensesTotal, stocksTotal],
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(54, 162, 235, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(54, 162, 235, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
+    // Fetch and display assets, licenses, and stocks
+    fetchAndDisplayData('/api/assets', 'assetsTableBody');
+    fetchAndDisplayData('/api/licenses', 'licensesTableBody');
+    fetchAndDisplayData('/api/stocks', 'stocksTableBody');
 });
+
+function handleItemTypeChange() {
+    const itemType = document.getElementById('itemType').value;
+    const fieldsContainer = document.getElementById('fieldsContainer');
+    fieldsContainer.innerHTML = '';
+
+    let fieldsHtml = '';
+    if (itemType === 'asset') {
+        fieldsHtml = `
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="model">Model/Serial No:</label>
+            <input type="text" id="model" name="model" required>
+            <label for="purchaseDate">Purchase Date:</label>
+            <input type="date" id="purchaseDate" name="purchaseDate" required>
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="date" id="expiryDate" name="expiryDate" required>
+            <label for="purchaseAmount">Purchase Amount:</label>
+            <input type="number" id="purchaseAmount" name="purchaseAmount" required>
+        `;
+    } else if (itemType === 'license') {
+        fieldsHtml = `
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="id">ID:</label>
+            <input type="text" id="id" name="id" required>
+            <label for="purchaseDate">Purchase Date:</label>
+            <input type="date" id="purchaseDate" name="purchaseDate" required>
+            <label for="expiryDate">Expiry Date:</label>
+            <input type="date" id="expiryDate" name="expiryDate" required>
+        `;
+    } else if (itemType === 'stock') {
+        fieldsHtml = `
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+            <label for="purchaseDate">Purchase Date:</label>
+            <input type="date" id="purchaseDate" name="purchaseDate" required>
+            <label for="purchaseAmount">Purchase Amount:</label>
+            <input type="number" id="purchaseAmount" name="purchaseAmount" required>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+            <label for="totalAmount">Total Amount:</label>
+            <input type="number" id="totalAmount" name="totalAmount" required>
+        `;
+    }
+
+    fieldsContainer.innerHTML = fieldsHtml;
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const itemType = document.getElementById('itemType').value;
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
+
+    let endpoint = '';
+    if (itemType === 'asset') {
+        endpoint = '/api/assets';
+    } else if (itemType === 'license') {
+        endpoint = '/api/licenses';
+    } else if (itemType === 'stock') {
+        endpoint = '/api/stocks';
+    }
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert('Item added successfully');
+        event.target.reset();
+        handleItemTypeChange(); // Reset fields
+        fetchAndDisplayData(endpoint, `${itemType}sTableBody`); // Refresh table
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function fetchAndDisplayData(endpoint, tableBodyId) {
+    fetch(endpoint)
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById(tableBodyId);
+            if (tableBody) {
+                tableBody.innerHTML = data.map(item => `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.model || item.id || item.quantity}</td>
+                        <td>${item.purchaseDate}</td>
+                        <td>${item.expiryDate || item.purchaseAmount}</td>
+                        <td>${item.purchaseAmount || item.totalAmount}</td>
+                        <td>
+                            <button onclick="deleteItem('${endpoint}', '${item._id}')">Delete</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function deleteItem(endpoint, itemId) {
+    fetch(`${endpoint}/${itemId}`, {
+        method: 'DELETE'
+    })
+    .then(() => {
+        alert('Item deleted successfully');
+        fetchAndDisplayData(endpoint, `${endpoint.split('/').pop()}TableBody`); // Refresh table
+    })
+    .catch(error => console.error('Error:', error));
+}

@@ -3,37 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Licenses</title>
+    <title>Licenses Management</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
             <li><a href="stocks.html">Stocks</a></li>
-            <li><a href="item.html">Add Item</a></li>
+            <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <main>
-        <h1>Licenses</h1>
-        <table id="licensesTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Location</th>
-                    <th>Purchase Date</th>
-                    <th>License Expiry Date</th>
-                    <th>Serial Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </main>
-    <script src="js/licenses.js"></script>
+    <h1>Licenses Management</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>ID</th>
+                <th>Purchase Date</th>
+                <th>Expiry Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="licensesTableBody">
+        </tbody>
+    </table>
+    <script src="js/script.js"></script>
 </body>
 </html>

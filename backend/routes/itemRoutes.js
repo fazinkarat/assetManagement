@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const itemController = require('../controllers/itemController');
+const Item = require('../models/itemModel');
 
-router.get('/', itemController.getAllItems);
-router.get('/:id', itemController.getItemById);
-router.post('/', itemController.createItem);
-router.put('/:id', itemController.updateItem);
-router.delete('/:id', itemController.deleteItem);
+router.post('/', async (req, res) => {
+    try {
+        const newItem = new Item(req.body);
+        await newItem.save();
+        res.status(201).json(newItem);
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 module.exports = router;

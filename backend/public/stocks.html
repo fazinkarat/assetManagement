@@ -3,37 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stocks</title>
+    <title>Stocks Management</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">Dashboard</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
             <li><a href="stocks.html">Stocks</a></li>
-            <li><a href="item.html">Add Item</a></li>
+            <li><a href="item.html">Add New Item</a></li>
         </ul>
     </nav>
-    <main>
-        <h1>Stocks</h1>
-        <table id="stocksTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Model</th>
-                    <th>Location</th>
-                    <th>Purchase Date</th>
-                    <th>License Expiry Date</th>
-                    <th>Serial Number</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Data will be populated here by JavaScript -->
-            </tbody>
-        </table>
-    </main>
-    <script src="js/stocks.js"></script>
+    <h1>Stocks Management</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Purchase Date</th>
+                <th>Purchase Amount</th>
+                <th>Quantity</th>
+                <th>Total Amount</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="stocksTableBody">
+        </tbody>
+    </table>
+    <script src="js/script.js"></script>
 </body>
 </html>
