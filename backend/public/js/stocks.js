@@ -1,64 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const stocksList = document.getElementById('stocksList');
+document.addEventListener('DOMContentLoaded', async function () {
+    const response = await fetch('/api/stocks');
+    const stocks = await response.json();
 
-    function fetchItems() {
-        fetch('http://localhost:3000/items')
-            .then(response => response.json())
-            .then(items => {
-                stocksList.innerHTML = '';
-                if (items.length === 0) {
-                    stocksList.innerHTML = '<tr><td colspan="9">No stocks available. Add new items <a href="item.html">here</a>.</td></tr>';
-                } else {
-                    let serialNumber = 1;
-                    items.forEach(item => {
-                        if (item.type === 'stocks') {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${serialNumber++}</td>
-                                <td>${item.name}</td>
-                                <td>${item.model}</td>
-                                <td>${item.quantity}</td>
-                                <td>${item.purchaseDate}</td>
-                                <td>${item.expiryDate}</td>
-                                <td>${item.purchaseAmount}</td>
-                                <td>${item.totalAmount}</td>
-                                <td>
-                                    <button onclick="editItem(${item.id})">Edit</button>
-                                    <button onclick="deleteItem(${item.id})">Delete</button>
-                                </td>
-                            `;
-                            stocksList.appendChild(row);
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    window.editItem = function(itemId) {
-        window.location.href = `edit.html?id=${itemId}`;
-    }
-
-    window.deleteItem = function(itemId) {
-        if (confirm('Are you sure you want to delete this item?')) {
-            fetch(`http://localhost:3000/items/${itemId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.status === 204) {
-                    alert('Item deleted successfully');
-                    fetchItems();
-                } else {
-                    alert('Error deleting item');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    }
-
-    fetchItems();
+    const stocksTable = document.getElementById('stocksTable').getElementsByTagName('tbody')[0];
+    stocks.forEach(stock => {
+        const row = stocksTable.insertRow();
+        row.insertCell(0).textContent = stock.name;
+        row.insertCell(1).textContent = stock.model;
+        row.insertCell(2).textContent = stock.location;
+        row.insertCell(3).textContent = stock.purchaseDate;
+        row.insertCell(4).textContent = stock.licenseExpiryDate;
+        row.insertCell(5).textContent = stock.serialNumber;
+    });
 });

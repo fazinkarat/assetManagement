@@ -1,64 +1,15 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const assetsList = document.getElementById('assetsList');
+document.addEventListener('DOMContentLoaded', async function () {
+    const response = await fetch('/api/assets');
+    const assets = await response.json();
 
-    function fetchItems() {
-        fetch('http://localhost:3000/items')
-            .then(response => response.json())
-            .then(items => {
-                assetsList.innerHTML = '';
-                if (items.length === 0) {
-                    assetsList.innerHTML = '<tr><td colspan="9">No assets available. Add new items <a href="item.html">here</a>.</td></tr>';
-                } else {
-                    let serialNumber = 1;
-                    items.forEach(item => {
-                        if (item.type === 'assets') {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${serialNumber++}</td>
-                                <td>${item.name}</td>
-                                <td>${item.model}</td>
-                                <td>${item.quantity}</td>
-                                <td>${item.purchaseDate}</td>
-                                <td>${item.expiryDate}</td>
-                                <td>${item.purchaseAmount}</td>
-                                <td>${item.totalAmount}</td>
-                                <td>
-                                    <button onclick="editItem(${item.id})">Edit</button>
-                                    <button onclick="deleteItem(${item.id})">Delete</button>
-                                </td>
-                            `;
-                            assetsList.appendChild(row);
-                        }
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }
-
-    window.editItem = function(itemId) {
-        window.location.href = `edit.html?id=${itemId}`;
-    }
-
-    window.deleteItem = function(itemId) {
-        if (confirm('Are you sure you want to delete this item?')) {
-            fetch(`http://localhost:3000/items/${itemId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.status === 204) {
-                    alert('Item deleted successfully');
-                    fetchItems();
-                } else {
-                    alert('Error deleting item');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        }
-    }
-
-    fetchItems();
+    const assetsTable = document.getElementById('assetsTable').getElementsByTagName('tbody')[0];
+    assets.forEach(asset => {
+        const row = assetsTable.insertRow();
+        row.insertCell(0).textContent = asset.name;
+        row.insertCell(1).textContent = asset.model;
+        row.insertCell(2).textContent = asset.location;
+        row.insertCell(3).textContent = asset.purchaseDate;
+        row.insertCell(4).textContent = asset.licenseExpiryDate;
+        row.insertCell(5).textContent = asset.serialNumber;
+    });
 });

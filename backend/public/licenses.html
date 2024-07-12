@@ -3,13 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Licenses Management</title>
+    <title>Licenses</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1>Licenses Management</h1>
-    <!-- Add your HTML content for managing licenses -->
-    <script src="js/script.js"></script>
-    <script src="js/licenses.js"></script> <!-- JavaScript for licenses page -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="assets.html">Assets</a></li>
+            <li><a href="licenses.html">Licenses</a></li>
+            <li><a href="stocks.html">Stocks</a></li>
+            <li><a href="item.html">Add Item</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Licenses</h1>
+        <table id="licensesTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Location</th>
+                    <th>Purchase Date</th>
+                    <th>License Expiry Date</th>
+                    <th>Serial Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+    <script src="js/licenses.js"></script>
 </body>
 </html>

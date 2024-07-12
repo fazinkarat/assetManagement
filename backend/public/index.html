@@ -5,20 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Asset Management</title>
     <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <nav>
         <ul>
+            <li><a href="index.html">Home</a></li>
             <li><a href="assets.html">Assets</a></li>
             <li><a href="licenses.html">Licenses</a></li>
             <li><a href="stocks.html">Stocks</a></li>
             <li><a href="item.html">Add Item</a></li>
         </ul>
     </nav>
-    <div id="bar-chart-container">
-        <canvas id="bar-chart"></canvas>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <main>
+        <h1>Welcome to Asset Management System</h1>
+        <canvas id="barChart" width="400" height="200"></canvas>
+    </main>
     <script src="js/script.js"></script>
 </body>
 </html>

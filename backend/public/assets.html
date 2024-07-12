@@ -3,35 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Asset</title>
+    <title>Assets</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1>Edit Asset</h1>
-    <form id="editAssetForm">
-        <!-- Populate form fields with data fetched from API -->
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br>
-        
-        <label for="model">Model:</label><br>
-        <input type="text" id="model" name="model" required><br>
-        
-        <label for="location">Location:</label><br>
-        <input type="text" id="location" name="location"><br>
-        
-        <label for="purchaseDate">Purchase Date:</label><br>
-        <input type="date" id="purchaseDate" name="purchaseDate"><br>
-        
-        <label for="licenseExpiryDate">License Expiry Date:</label><br>
-        <input type="date" id="licenseExpiryDate" name="licenseExpiryDate"><br>
-        
-        <label for="serialNumber">Serial Number:</label><br>
-        <input type="text" id="serialNumber" name="serialNumber" required><br><br>
-        
-        <button type="submit">Save Changes</button>
-    </form>
-
-    <script src="js/script.js"></script>
-    <script src="js/assets.js"></script> <!-- JavaScript for asset editing logic -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="assets.html">Assets</a></li>
+            <li><a href="licenses.html">Licenses</a></li>
+            <li><a href="stocks.html">Stocks</a></li>
+            <li><a href="item.html">Add Item</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Assets</h1>
+        <table id="assetsTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Model</th>
+                    <th>Location</th>
+                    <th>Purchase Date</th>
+                    <th>License Expiry Date</th>
+                    <th>Serial Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be populated here by JavaScript -->
+            </tbody>
+        </table>
+    </main>
+    <script src="js/assets.js"></script>
 </body>
 </html>

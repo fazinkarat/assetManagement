@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Items Management</title>
+    <title>Add Item</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1>Items Management</h1>
-    
-    <!-- Table to display items -->
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="itemList">
-            <!-- Items will be dynamically added here -->
-        </tbody>
-    </table>
-
-    <!-- Form for adding a new item -->
-    <h2>Add New Item</h2>
-    <form id="addItemForm">
-        <label for="itemName">Name:</label>
-        <input type="text" id="itemName" name="name" required><br>
-        
-        <label for="itemDescription">Description:</label>
-        <textarea id="itemDescription" name="description"></textarea><br>
-        
-        <button type="submit">Add Item</button>
-    </form>
-
-    <!-- Script to fetch and display items -->
-    <script src="js/script.js"></script>
-    <script src="js/item.js"></script> <!-- JavaScript for item page -->
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="assets.html">Assets</a></li>
+            <li><a href="licenses.html">Licenses</a></li>
+            <li><a href="stocks.html">Stocks</a></li>
+            <li><a href="item.html">Add Item</a></li>
+        </ul>
+    </nav>
+    <main>
+        <h1>Add New Item</h1>
+        <form id="addItemForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location">
+            <label for="purchaseDate">Purchase Date:</label>
+            <input type="date" id="purchaseDate" name="purchaseDate">
+            <label for="expiryDate">License Expiry Date:</label>
+            <input type="date" id="expiryDate" name="expiryDate">
+            <label for="serialNumber">Serial Number:</label>
+            <input type="text" id="serialNumber" name="serialNumber">
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" min="0">
+            <label for="type">Type:</label>
+            <select id="type" name="type">
+                <option value="asset">Asset</option>
+                <option value="license">License</option>
+                <option value="stock">Stock</option>
+            </select>
+            <button type="submit">Add Item</button>
+        </form>
+    </main>
+    <script src="js/item.js"></script>
 </body>
 </html>

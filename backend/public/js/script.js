@@ -1,44 +1,14 @@
-document.getElementById('addItemForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+document.addEventListener('DOMContentLoaded', async function () {
+    const response = await fetch('/api/assets/total');
+    const assetsTotal = await response.json();
 
-    const itemType = document.getElementById('itemType').value;
-    const itemName = document.getElementById('itemName').value;
-    const modelNumber = document.getElementById('modelNumber').value;
-    const date = document.getElementById('date').value;
+    const response2 = await fetch('/api/licenses/total');
+    const licensesTotal = await response2.json();
 
-    const newItem = {
-        type: itemType,
-        name: itemName,
-        model: modelNumber,
-        date: date
-    };
+    const response3 = await fetch('/api/stocks/total');
+    const stocksTotal = await response3.json();
 
-    fetch('http://localhost:3000/items', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newItem)
-    })
-    .then(response => response.json())
-    .then(data => {
-        alert('Item added successfully!');
-        window.location.href = 'index.html'; // Redirect to dashboard or desired page
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-});
-
-document.addEventListener('DOMContentLoaded', async function() {
-    const response = await fetch('/api/items');
-    const items = await response.json();
-
-    const assetsTotal = items.filter(item => item.type === 'asset').reduce((acc, item) => acc + item.quantity, 0);
-    const licensesTotal = items.filter(item => item.type === 'license').reduce((acc, item) => acc + item.quantity, 0);
-    const stocksTotal = items.filter(item => item.type === 'stock').reduce((acc, item) => acc + item.quantity, 0);
-
-    const ctx = document.getElementById('bar-chart').getContext('2d');
+    const ctx = document.getElementById('barChart').getContext('2d');
     new Chart(ctx, {
         type: 'bar',
         data: {
@@ -46,11 +16,20 @@ document.addEventListener('DOMContentLoaded', async function() {
             datasets: [{
                 label: 'Total Quantity',
                 data: [assetsTotal, licensesTotal, stocksTotal],
-                backgroundColor: ['#30bced', '#ff4c6d', '#ffb142']
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(54, 162, 235, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
             }]
         },
         options: {
-            responsive: true,
             scales: {
                 y: {
                     beginAtZero: true
