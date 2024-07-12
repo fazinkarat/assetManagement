@@ -1,0 +1,4 @@
+const Stock = require('../models/stockModel.js');
+
+// Controller logic for stocks
+// Implement similar CRUD operations as shown for licenses

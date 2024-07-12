@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stocks</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="stocks.js" defer></script>
+    <title>Stocks Management</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="assets.html">Assets</a></li>
-            <li><a href="licenses.html">Licenses</a></li>
-            <li><a href="stocks.html">Stock</a></li>
-            <li><a href="item.html">Add New Item</a></li>
-        </ul>
-    </nav>
+    <h1>Stocks Management</h1>
+    
+    <!-- Table to display stocks -->
     <table>
         <thead>
             <tr>
-                <th>Serial Number</th>
                 <th>Name</th>
-                <th>Model</th>
                 <th>Quantity</th>
-                <th>Purchase Date</th>
-                <th>Expiry Date</th>
-                <th>Purchase Amount</th>
-                <th>Total Amount</th>
                 <th>Actions</th>
             </tr>
         </thead>
-        <tbody id="stocksList">
-            <!-- Items will be populated here by stocks.js -->
+        <tbody id="stockList">
+            <!-- Stocks will be dynamically added here -->
         </tbody>
     </table>
+
+    <!-- Form for adding a new stock -->
+    <h2>Add New Stock</h2>
+    <form id="addStockForm">
+        <label for="stockName">Name:</label>
+        <input type="text" id="stockName" name="name" required><br>
+        
+        <label for="stockQuantity">Quantity:</label>
+        <input type="number" id="stockQuantity" name="quantity" required><br>
+        
+        <button type="submit">Add Stock</button>
+    </form>
+
+    <!-- Script to fetch and display stocks -->
+    <script src="js/script.js"></script>
+    <script src="js/stocks.js"></script> <!-- JavaScript for stocks page -->
 </body>
 </html>

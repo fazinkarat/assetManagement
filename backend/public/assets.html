@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assets</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="assets.js" defer></script>
+    <title>Edit Asset</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="assets.html">Assets</a></li>
-            <li><a href="licenses.html">Licenses</a></li>
-            <li><a href="stocks.html">Stock</a></li>
-            <li><a href="item.html">Add New Item</a></li>
-        </ul>
-    </nav>
-    <table>
-        <thead>
-            <tr>
-                <th>Serial Number</th>
-                <th>Name</th>
-                <th>Model</th>
-                <th>Quantity</th>
-                <th>Purchase Date</th>
-                <th>Expiry Date</th>
-                <th>Purchase Amount</th>
-                <th>Total Amount</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="assetsList">
-            <!-- Items will be populated here by assets.js -->
-        </tbody>
-    </table>
+    <h1>Edit Asset</h1>
+    <form id="editAssetForm">
+        <!-- Populate form fields with data fetched from API -->
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        
+        <label for="model">Model:</label><br>
+        <input type="text" id="model" name="model" required><br>
+        
+        <label for="location">Location:</label><br>
+        <input type="text" id="location" name="location"><br>
+        
+        <label for="purchaseDate">Purchase Date:</label><br>
+        <input type="date" id="purchaseDate" name="purchaseDate"><br>
+        
+        <label for="licenseExpiryDate">License Expiry Date:</label><br>
+        <input type="date" id="licenseExpiryDate" name="licenseExpiryDate"><br>
+        
+        <label for="serialNumber">Serial Number:</label><br>
+        <input type="text" id="serialNumber" name="serialNumber" required><br><br>
+        
+        <button type="submit">Save Changes</button>
+    </form>
+
+    <script src="js/script.js"></script>
+    <script src="js/assets.js"></script> <!-- JavaScript for asset editing logic -->
 </body>
 </html>
