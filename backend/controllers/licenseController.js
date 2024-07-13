@@ -12,11 +12,7 @@ exports.getAllLicenses = async (req, res) => {
 exports.getLicenseById = async (req, res) => {
     try {
         const license = await License.findById(req.params.id);
-        if (license) {
-            res.json(license);
-        } else {
-            res.status(404).json({ error: 'License not found' });
-        }
+        res.json(license);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -28,31 +24,23 @@ exports.createLicense = async (req, res) => {
         await newLicense.save();
         res.status(201).json(newLicense);
     } catch (error) {
-        res.status(400).json({ error: 'Bad Request' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 exports.updateLicense = async (req, res) => {
     try {
         const updatedLicense = await License.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (updatedLicense) {
-            res.json(updatedLicense);
-        } else {
-            res.status(404).json({ error: 'License not found' });
-        }
+        res.json(updatedLicense);
     } catch (error) {
-        res.status(400).json({ error: 'Bad Request' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 exports.deleteLicense = async (req, res) => {
     try {
-        const deletedLicense = await License.findByIdAndDelete(req.params.id);
-        if (deletedLicense) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ error: 'License not found' });
-        }
+        await License.findByIdAndDelete(req.params.id);
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }

@@ -17,6 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAndDisplayData('/api/stocks', 'stocksTableBody');
 });
 
+// Function to format date
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
 function handleItemTypeChange() {
     const itemType = document.getElementById('itemType').value;
     const fieldsContainer = document.getElementById('fieldsContainer');
@@ -27,8 +33,8 @@ function handleItemTypeChange() {
         fieldsHtml = `
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
-            <label for="model">Model/Serial No:</label>
-            <input type="text" id="model" name="model" required>
+            <label for="modelSerial">Model/Serial No:</label>
+            <input type="text" id="modelSerial" name="modelSerial" required>
             <label for="purchaseDate">Purchase Date:</label>
             <input type="date" id="purchaseDate" name="purchaseDate" required>
             <label for="expiryDate">Expiry Date:</label>
@@ -105,9 +111,9 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
                 tableBody.innerHTML = data.map(item => `
                     <tr>
                         <td>${item.name}</td>
-                        <td>${item.model || item.id || item.quantity}</td>
-                        <td>${item.purchaseDate}</td>
-                        <td>${item.expiryDate || item.purchaseAmount}</td>
+                        <td>${item.modelSerial || item.id || item.quantity}</td>
+                        <td>${formatDate(item.purchaseDate)}</td>
+                        <td>${formatDate(item.expiryDate) || item.purchaseAmount}</td>
                         <td>${item.purchaseAmount || item.totalAmount}</td>
                         <td>
                             <button onclick="deleteItem('${endpoint}', '${item._id}')">Delete</button>
@@ -129,3 +135,4 @@ function deleteItem(endpoint, itemId) {
     })
     .catch(error => console.error('Error:', error));
 }
+

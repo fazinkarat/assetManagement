@@ -12,11 +12,7 @@ exports.getAllStocks = async (req, res) => {
 exports.getStockById = async (req, res) => {
     try {
         const stock = await Stock.findById(req.params.id);
-        if (stock) {
-            res.json(stock);
-        } else {
-            res.status(404).json({ error: 'Stock not found' });
-        }
+        res.json(stock);
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
@@ -28,31 +24,23 @@ exports.createStock = async (req, res) => {
         await newStock.save();
         res.status(201).json(newStock);
     } catch (error) {
-        res.status(400).json({ error: 'Bad Request' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 exports.updateStock = async (req, res) => {
     try {
         const updatedStock = await Stock.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        if (updatedStock) {
-            res.json(updatedStock);
-        } else {
-            res.status(404).json({ error: 'Stock not found' });
-        }
+        res.json(updatedStock);
     } catch (error) {
-        res.status(400).json({ error: 'Bad Request' });
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
 exports.deleteStock = async (req, res) => {
     try {
-        const deletedStock = await Stock.findByIdAndDelete(req.params.id);
-        if (deletedStock) {
-            res.status(204).send();
-        } else {
-            res.status(404).json({ error: 'Stock not found' });
-        }
+        await Stock.findByIdAndDelete(req.params.id);
+        res.status(204).send();
     } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
     }
