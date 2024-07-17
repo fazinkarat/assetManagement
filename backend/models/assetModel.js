@@ -5,7 +5,7 @@ const assetSchema = new mongoose.Schema({
     model: { type: String },
     purchaseDate: { type: Date },
     expiryDate: { type: Date },
-    purchaseAmount: { type: Number }
+    totalAmount: { type: Number }
 });
 
 module.exports = mongoose.model('Asset', assetSchema);

@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 model: formData.get('model'),
                 purchaseDate: formData.get('purchaseDate'),
                 expiryDate: formData.get('expiryDate'),
-                purchaseAmount: formData.get('purchaseAmount')
+                purchaseAmount: formData.get('totalAmount')
             };
         } else if (itemType === 'license') {
             itemData = {
@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: 'stock',
                 name: formData.get('name'),
                 purchaseDate: formData.get('purchaseDate'),
-                purchaseAmount: formData.get('purchaseAmount'),
                 quantity: formData.get('quantity'),
+                purchaseAmount: formData.get('purchaseAmount'),
                 totalAmount: formData.get('totalAmount')
             };
         }

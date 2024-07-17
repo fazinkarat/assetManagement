@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 row.innerHTML = `
                     <td>${stock.name}</td>
                     <td>${new Date(stock.purchaseDate).toLocaleDateString()}</td>
-                    <td>${stock.purchaseAmount}</td>
                     <td>${stock.quantity}</td>
+                    <td>${stock.purchaseAmount}</td>
                     <td>${stock.totalAmount}</td>
                 `;
                 tableBody.appendChild(row);

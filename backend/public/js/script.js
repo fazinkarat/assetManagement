@@ -33,14 +33,14 @@ function handleItemTypeChange() {
         fieldsHtml = `
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
-            <label for="modelSerial">Model/Serial No:</label>
-            <input type="text" id="modelSerial" name="modelSerial" required>
+            <label for="model">Model/Serial No:</label>
+            <input type="text" id="model" name="model" required>
             <label for="purchaseDate">Purchase Date:</label>
             <input type="date" id="purchaseDate" name="purchaseDate" required>
             <label for="expiryDate">Expiry Date:</label>
             <input type="date" id="expiryDate" name="expiryDate" required>
-            <label for="purchaseAmount">Purchase Amount:</label>
-            <input type="number" id="purchaseAmount" name="purchaseAmount" required>
+            <label for="totalAmount">Amount:</label>
+            <input type="number" id="totalAmount" name="totalAmount" required>
         `;
     } else if (itemType === 'license') {
         fieldsHtml = `
@@ -59,10 +59,10 @@ function handleItemTypeChange() {
             <input type="text" id="name" name="name" required>
             <label for="purchaseDate">Purchase Date:</label>
             <input type="date" id="purchaseDate" name="purchaseDate" required>
-            <label for="purchaseAmount">Purchase Amount:</label>
-            <input type="number" id="purchaseAmount" name="purchaseAmount" required>
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" name="quantity" required>
+            <label for="purchaseAmount">Purchase Amount:</label>
+            <input type="number" id="purchaseAmount" name="purchaseAmount" required>
             <label for="totalAmount">Total Amount:</label>
             <input type="number" id="totalAmount" name="totalAmount" required>
         `;
@@ -111,10 +111,10 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
                 tableBody.innerHTML = data.map(item => `
                     <tr>
                         <td>${item.name}</td>
-                        <td>${item.modelSerial || item.id || item.quantity}</td>
-                        <td>${formatDate(item.purchaseDate)}</td>
-                        <td>${formatDate(item.expiryDate) || item.purchaseAmount}</td>
-                        <td>${item.purchaseAmount || item.totalAmount}</td>
+                        <td>${item.model || item.id || formatDate(item.purchaseDate)}</td>
+                        <td>${item.quantity || formatDate(item.purchaseDate)}</td>
+                        <td>${item.purchaseAmount || formatDate(item.expiryDate)}</td>
+                        <td>${item.totalAmount || item.purchaseAmount}</td>
                         <td>
                             <button onclick="deleteItem('${endpoint}', '${item._id}')">Delete</button>
                         </td>
@@ -135,4 +135,3 @@ function deleteItem(endpoint, itemId) {
     })
     .catch(error => console.error('Error:', error));
 }
-

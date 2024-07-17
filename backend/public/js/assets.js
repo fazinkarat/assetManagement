@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${asset.model}</td>
                     <td>${new Date(asset.purchaseDate).toLocaleDateString()}</td>
                     <td>${new Date(asset.expiryDate).toLocaleDateString()}</td>
-                    <td>${asset.purchaseAmount}</td>
+                    <td>${asset.totalAmount}</td>
                 `;
                 tableBody.appendChild(row);
             });
