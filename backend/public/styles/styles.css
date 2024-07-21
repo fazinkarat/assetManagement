@@ -79,7 +79,7 @@ nav ul li {
 }
 
 nav ul li a {
-    color: rgb(241, 228, 228);
+    color: rgb(228, 241, 229);
     text-decoration: none;
     font-size: 1em;
 }
@@ -103,7 +103,7 @@ table {
 
 table thead tr {
     background-color: #043c31;
-    color: rgb(215, 184, 184);
+    color: rgb(48, 150, 99);
     text-align: left;
     font-weight: bold;
 }

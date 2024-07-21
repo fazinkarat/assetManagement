@@ -27,22 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (modalForm) {
         modalForm.addEventListener('submit', handleModalFormSubmit);
     }
+
+    // Event delegation for edit and delete buttons
+    document.body.addEventListener('click', (event) => {
+        if (event.target.classList.contains('edit-button')) {
+            editItem(event.target.dataset.endpoint, event.target.dataset.itemId);
+        } else if (event.target.classList.contains('delete-button')) {
+            deleteItem(event.target.dataset.endpoint, event.target.dataset.itemId);
+        }
+    });
 });
 
-// Function to format date
-function formatDate(dateString) {
-    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-}
-
-function handleItemTypeChange() {
-    const itemType = document.getElementById('itemType').value;
-    const fieldsContainer = document.getElementById('fieldsContainer');
-    fieldsContainer.innerHTML = '';
-
-    let fieldsHtml = '';
-    if (itemType === 'asset') {
-        fieldsHtml = `
+// Function to generate input fields based on item type
+function generateFieldsHtml(itemType) {
+    const fields = {
+        asset: `
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="model">Model/Serial No:</label>
@@ -53,9 +52,8 @@ function handleItemTypeChange() {
             <input type="date" id="expiryDate" name="expiryDate" required>
             <label for="totalAmount">Amount:</label>
             <input type="number" id="totalAmount" name="totalAmount" required>
-        `;
-    } else if (itemType === 'license') {
-        fieldsHtml = `
+        `,
+        license: `
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="id">ID:</label>
@@ -64,9 +62,8 @@ function handleItemTypeChange() {
             <input type="date" id="purchaseDate" name="purchaseDate" required>
             <label for="expiryDate">Expiry Date:</label>
             <input type="date" id="expiryDate" name="expiryDate" required>
-        `;
-    } else if (itemType === 'stock') {
-        fieldsHtml = `
+        `,
+        stock: `
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
             <label for="purchaseDate">Purchase Date:</label>
@@ -77,10 +74,15 @@ function handleItemTypeChange() {
             <input type="number" id="purchaseAmount" name="purchaseAmount" required>
             <label for="totalAmount">Total Amount:</label>
             <input type="number" id="totalAmount" name="totalAmount" required>
-        `;
-    }
+        `
+    };
+    return fields[itemType] || '';
+}
 
-    fieldsContainer.innerHTML = fieldsHtml;
+function handleItemTypeChange() {
+    const itemType = document.getElementById('itemType').value;
+    const fieldsContainer = document.getElementById('fieldsContainer');
+    fieldsContainer.innerHTML = generateFieldsHtml(itemType);
 }
 
 function handleFormSubmit(event) {
@@ -90,14 +92,13 @@ function handleFormSubmit(event) {
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    let endpoint = '';
-    if (itemType === 'asset') {
-        endpoint = '/api/assets';
-    } else if (itemType === 'license') {
-        endpoint = '/api/licenses';
-    } else if (itemType === 'stock') {
-        endpoint = '/api/stocks';
-    }
+    const endpoints = {
+        asset: '/api/assets',
+        license: '/api/licenses',
+        stock: '/api/stocks'
+    };
+
+    const endpoint = endpoints[itemType];
 
     fetch(endpoint, {
         method: 'POST',
@@ -111,7 +112,10 @@ function handleFormSubmit(event) {
         handleItemTypeChange(); // Reset fields
         fetchAndDisplayData(endpoint, `${itemType}sTableBody`); // Refresh table
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to add item');
+    });
 }
 
 function fetchAndDisplayData(endpoint, tableBodyId) {
@@ -122,20 +126,23 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
             if (tableBody) {
                 tableBody.innerHTML = data.map(item => `
                     <tr>
-                         <td>${item.name}</td>
+                        <td>${item.name}</td>
                         <td>${item.model || item.id || formatDate(item.purchaseDate)}</td>
                         <td>${item.quantity || formatDate(item.purchaseDate)}</td>
                         <td>${item.purchaseAmount || formatDate(item.expiryDate)}</td>
                         <td>${item.totalAmount || item.purchaseAmount}</td>
                         <td>
-                            <button onclick="editItem('${endpoint}', '${item._id}')">Edit</button>
-                            <button onclick="deleteItem('${endpoint}', '${item._id}')">Delete</button>
+                            <button class="edit-button" data-endpoint="${endpoint}" data-item-id="${item._id}">Edit</button>
+                            <button class="delete-button" data-endpoint="${endpoint}" data-item-id="${item._id}">Delete</button>
                         </td>
                     </tr>
                 `).join('');
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch data');
+        });
 }
 
 function deleteItem(endpoint, itemId) {
@@ -146,7 +153,10 @@ function deleteItem(endpoint, itemId) {
         alert('Item deleted successfully');
         fetchAndDisplayData(endpoint, `${endpoint.split('/').pop()}TableBody`); // Refresh table
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to delete item');
+    });
 }
 
 function editItem(endpoint, itemId) {
@@ -169,7 +179,10 @@ function editItem(endpoint, itemId) {
                 }
             });
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to fetch item details');
+        });
 }
 
 function closeModal() {
@@ -197,5 +210,13 @@ function handleModalFormSubmit(event) {
         closeModal();
         fetchAndDisplayData(endpoint, `${endpoint.split('/').pop()}TableBody`); // Refresh table
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Failed to update item');
+    });
+}
+
+function formatDate(dateString) {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
 }
