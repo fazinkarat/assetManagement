@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Function to generate input fields based on item type
 function generateFieldsHtml(itemType) {
     const fields = {
         asset: `
@@ -73,7 +72,7 @@ function generateFieldsHtml(itemType) {
             <label for="purchaseAmount">Purchase Amount:</label>
             <input type="number" id="purchaseAmount" name="purchaseAmount" required>
             <label for="totalAmount">Total Amount:</label>
-            <input type="number" id="totalAmount" name="totalAmount" required>
+            <input type="number" id="totalAmount" name="totalAmount" required readonly>
         `
     };
     return fields[itemType] || '';
@@ -83,6 +82,23 @@ function handleItemTypeChange() {
     const itemType = document.getElementById('itemType').value;
     const fieldsContainer = document.getElementById('fieldsContainer');
     fieldsContainer.innerHTML = generateFieldsHtml(itemType);
+
+    // Add event listeners to quantity and purchase amount fields for stocks
+    if (itemType === 'stock') {
+        const quantityInput = document.getElementById('quantity');
+        const purchaseAmountInput = document.getElementById('purchaseAmount');
+        if (quantityInput && purchaseAmountInput) {
+            quantityInput.addEventListener('input', updateTotalAmount);
+            purchaseAmountInput.addEventListener('input', updateTotalAmount);
+        }
+    }
+}
+
+function updateTotalAmount() {
+    const quantity = parseFloat(document.getElementById('quantity').value) || 0;
+    const purchaseAmount = parseFloat(document.getElementById('purchaseAmount').value) || 0;
+    const totalAmount = quantity * purchaseAmount;
+    document.getElementById('totalAmount').value = totalAmount.toFixed(2);
 }
 
 function handleFormSubmit(event) {
@@ -178,6 +194,16 @@ function editItem(endpoint, itemId) {
                     input.value = item[key];
                 }
             });
+
+            // Add event listeners to quantity and purchase amount fields for updating total amount
+            if (itemType === 'stock') {
+                const quantityInput = document.getElementById('modalForm').querySelector('[name="quantity"]');
+                const purchaseAmountInput = document.getElementById('modalForm').querySelector('[name="purchaseAmount"]');
+                if (quantityInput && purchaseAmountInput) {
+                    quantityInput.addEventListener('input', updateModalTotalAmount);
+                    purchaseAmountInput.addEventListener('input', updateModalTotalAmount);
+                }
+            }
         })
         .catch(error => {
             console.error('Error:', error);
@@ -214,6 +240,13 @@ function handleModalFormSubmit(event) {
         console.error('Error:', error);
         alert('Failed to update item');
     });
+}
+
+function updateModalTotalAmount() {
+    const quantity = parseFloat(document.getElementById('modalForm').querySelector('[name="quantity"]').value) || 0;
+    const purchaseAmount = parseFloat(document.getElementById('modalForm').querySelector('[name="purchaseAmount"]').value) || 0;
+    const totalAmount = quantity * purchaseAmount;
+    document.getElementById('modalForm').querySelector('[name="totalAmount"]').value = totalAmount.toFixed(2);
 }
 
 function formatDate(dateString) {
