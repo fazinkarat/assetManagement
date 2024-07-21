@@ -30,6 +30,23 @@
         <tbody id="licensesTableBody">
         </tbody>
     </table>
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalButton" class="close">&times;</span>
+            <form id="modalForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required>
+                <label for="purchaseDate">Purchase Date:</label>
+                <input type="date" id="purchaseDate" name="purchaseDate" required>
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="date" id="expiryDate" name="expiryDate" required>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>

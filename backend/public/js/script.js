@@ -15,6 +15,18 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchAndDisplayData('/api/assets', 'assetsTableBody');
     fetchAndDisplayData('/api/licenses', 'licensesTableBody');
     fetchAndDisplayData('/api/stocks', 'stocksTableBody');
+
+    // Event listener for modal close button
+    const closeModalButton = document.getElementById('closeModalButton');
+    if (closeModalButton) {
+        closeModalButton.addEventListener('click', closeModal);
+    }
+
+    // Event listener for modal form submission
+    const modalForm = document.getElementById('modalForm');
+    if (modalForm) {
+        modalForm.addEventListener('submit', handleModalFormSubmit);
+    }
 });
 
 // Function to format date
@@ -110,12 +122,13 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
             if (tableBody) {
                 tableBody.innerHTML = data.map(item => `
                     <tr>
-                        <td>${item.name}</td>
+                         <td>${item.name}</td>
                         <td>${item.model || item.id || formatDate(item.purchaseDate)}</td>
                         <td>${item.quantity || formatDate(item.purchaseDate)}</td>
                         <td>${item.purchaseAmount || formatDate(item.expiryDate)}</td>
                         <td>${item.totalAmount || item.purchaseAmount}</td>
                         <td>
+                            <button onclick="editItem('${endpoint}', '${item._id}')">Edit</button>
                             <button onclick="deleteItem('${endpoint}', '${item._id}')">Delete</button>
                         </td>
                     </tr>
@@ -131,6 +144,57 @@ function deleteItem(endpoint, itemId) {
     })
     .then(() => {
         alert('Item deleted successfully');
+        fetchAndDisplayData(endpoint, `${endpoint.split('/').pop()}TableBody`); // Refresh table
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function editItem(endpoint, itemId) {
+    fetch(`${endpoint}/${itemId}`)
+        .then(response => response.json())
+        .then(item => {
+            // Open modal
+            const modal = document.getElementById('editModal');
+            modal.style.display = 'block';
+
+            // Pre-fill modal form with item data
+            const modalForm = document.getElementById('modalForm');
+            modalForm.dataset.endpoint = endpoint;
+            modalForm.dataset.itemId = itemId;
+
+            Object.keys(item).forEach(key => {
+                const input = modalForm.querySelector(`[name="${key}"]`);
+                if (input) {
+                    input.value = item[key];
+                }
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+function closeModal() {
+    const modal = document.getElementById('editModal');
+    modal.style.display = 'none';
+}
+
+function handleModalFormSubmit(event) {
+    event.preventDefault();
+
+    const modalForm = event.target;
+    const endpoint = modalForm.dataset.endpoint;
+    const itemId = modalForm.dataset.itemId;
+    const formData = new FormData(modalForm);
+    const data = Object.fromEntries(formData.entries());
+
+    fetch(`${endpoint}/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+        alert('Item updated successfully');
+        closeModal();
         fetchAndDisplayData(endpoint, `${endpoint.split('/').pop()}TableBody`); // Refresh table
     })
     .catch(error => console.error('Error:', error));
