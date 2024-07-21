@@ -7,30 +7,49 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Dashboard</a></li>
-            <li><a href="assets.html">Assets</a></li>
-            <li><a href="licenses.html">Licenses</a></li>
-            <li><a href="stocks.html">Stocks</a></li>
-            <li><a href="item.html">Add New Item</a></li>
-        </ul>
-    </nav>
-    <h1>Assets Management</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Model/Serial No</th>
-                <th>Purchase Date</th>
-                <th>Expiry Date</th>
-                <th>Amount</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="assetsTableBody">
-        </tbody>
-    </table>
+        <nav>
+            <ul>
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="assets.html">Assets</a></li>
+                <li><a href="licenses.html">Licenses</a></li>
+                <li><a href="stocks.html">Stocks</a></li>
+                <li><a href="item.html">Add New Item</a></li>
+            </ul>
+        </nav>
+        <h1>Assets Management</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Model/Serial No</th>
+                    <th>Purchase Date</th>
+                    <th>Expiry Date</th>
+                    <th>Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="assetsTableBody">
+            </tbody>
+        </table>
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModalButton" class="close">&times;</span>
+            <form id="modalForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="modelSerial">Model/Serial No:</label>
+                <input type="text" id="modelSerial" name="modelSerial" required>
+                <label for="purchaseDate">Purchase Date:</label>
+                <input type="date" id="purchaseDate" name="purchaseDate" required>
+                <label for="expiryDate">Expiry Date:</label>
+                <input type="date" id="expiryDate" name="expiryDate" required>
+                <label for="purchaseAmount">Amount:</label>
+                <input type="number" id="purchaseAmount" name="purchaseAmount" required>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>
