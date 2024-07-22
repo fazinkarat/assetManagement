@@ -177,7 +177,12 @@ function deleteItem(endpoint, itemId) {
 
 function editItem(endpoint, itemId) {
     fetch(`${endpoint}/${itemId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch item details');
+            }
+            return response.json();
+        })
         .then(item => {
             // Open modal
             const modal = document.getElementById('editModal');
@@ -196,18 +201,16 @@ function editItem(endpoint, itemId) {
             });
 
             // Add event listeners to quantity and purchase amount fields for updating total amount
-            if (itemType === 'stock') {
-                const quantityInput = document.getElementById('modalForm').querySelector('[name="quantity"]');
-                const purchaseAmountInput = document.getElementById('modalForm').querySelector('[name="purchaseAmount"]');
-                if (quantityInput && purchaseAmountInput) {
-                    quantityInput.addEventListener('input', updateModalTotalAmount);
-                    purchaseAmountInput.addEventListener('input', updateModalTotalAmount);
-                }
+            if (modalForm.querySelector('[name="quantity"]') && modalForm.querySelector('[name="purchaseAmount"]')) {
+                const quantityInput = modalForm.querySelector('[name="quantity"]');
+                const purchaseAmountInput = modalForm.querySelector('[name="purchaseAmount"]');
+                quantityInput.addEventListener('input', updateModalTotalAmount);
+                purchaseAmountInput.addEventListener('input', updateModalTotalAmount);
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Failed to fetch item details');
+            alert(error.message);
         });
 }
 

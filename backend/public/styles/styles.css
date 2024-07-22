@@ -3,13 +3,15 @@ body {
     margin: 0;
     padding: 0;
     background-color: #e1d5d6;
-}   
+}
+
 .dashboard {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     padding: 20px;
 }
+
 .container {
     max-width: 600px;
     margin: 0 auto;
@@ -54,6 +56,7 @@ button {
 button:hover {
     background-color: #c04e03;
 }
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -93,10 +96,13 @@ h1 {
     color: #497aab;
 }
 
+.table-container {
+    margin: 20px 40px; /* Add margin around the table */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
     font-size: 1em;
     text-align: left;
 }
@@ -127,6 +133,7 @@ table tbody tr:last-of-type {
 table tbody tr:hover {
     background-color: #f1f1f1;
 }
+
 /* Styles for the form */
 form {
     display: grid;
@@ -135,6 +142,7 @@ form {
     max-width: 600px;
     margin: 0 auto;
 }
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -265,4 +273,3 @@ form button {
 form button:hover {
     background-color: #547a3f;
 }
-

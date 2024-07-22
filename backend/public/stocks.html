@@ -17,20 +17,22 @@
             </ul>
         </nav>
         <h1>Stocks Management</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Purchase Date</th>
-                    <th>Quantity</th>
-                    <th>Purchase Amount</th>
-                    <th>Total Amount</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="stocksTableBody">
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table id="licensesTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Purchase Date</th>
+                        <th>Quantity</th>
+                        <th>Purchase Amount</th>
+                        <th>Total Amount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="stocksTableBody">
+                </tbody>
+            </table>
+        </div>    
         
     <!-- Edit Modal -->
     <div id="editModal" class="modal">
@@ -46,7 +48,7 @@
                 <label for="purchaseAmount">Purchase Amount:</label>
                 <input type="number" id="purchaseAmount" name="purchaseAmount" required>
                 <label for="totalAmount">Total Amount:</label>
-                <input type="number" id="totalAmount" name="totalAmount" required>
+                <input type="number" id="totalAmount" name="totalAmount" readonly required>
                 <button type="submit">Save Changes</button>
             </form>
         </div>
