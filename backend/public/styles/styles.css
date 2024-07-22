@@ -214,6 +214,10 @@ button:hover {
     background-color: #b72121a8;
 }
 
+.highlight-expiring {
+    background-color: #ffcccc; /* Light red color */
+}
+
 /* Modal styles */
 .modal {
     display: none;

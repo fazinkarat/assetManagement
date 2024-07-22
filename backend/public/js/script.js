@@ -141,7 +141,7 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
             const tableBody = document.getElementById(tableBodyId);
             if (tableBody) {
                 tableBody.innerHTML = data.map((item, index) => `
-                    <tr>
+                    <tr class="${isExpiringSoon(item.expiryDate) ? 'highlight-expiring' : ''}">
                         <td>${index + 1}</td>
                         <td>${item.name}</td>
                         <td>${item.model || item.id || formatDate(item.purchaseDate)}</td>
@@ -178,12 +178,7 @@ function deleteItem(endpoint, itemId) {
 
 function editItem(endpoint, itemId) {
     fetch(`${endpoint}/${itemId}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to fetch item details');
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(item => {
             // Open modal
             const modal = document.getElementById('editModal');
@@ -211,7 +206,7 @@ function editItem(endpoint, itemId) {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert(error.message);
+            alert('Failed to fetch item details');
         });
 }
 
@@ -256,4 +251,13 @@ function updateModalTotalAmount() {
 function formatDate(dateString) {
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
     return new Date(dateString).toLocaleDateString(undefined, options);
+}
+
+function isExpiringSoon(expiryDate) {
+    if (!expiryDate) return false;
+    const currentDate = new Date();
+    const expirationDate = new Date(expiryDate);
+    const timeDifference = expirationDate - currentDate;
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+    return daysDifference <= 14 && daysDifference >= 0;
 }
