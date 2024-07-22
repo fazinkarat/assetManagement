@@ -211,11 +211,11 @@ button {
 }
 
 button:hover {
-    background-color: #b72121a8;
+    background-color: #ed1818a8;
 }
 
 .highlight-expiring {
-    background-color: #ffcccc; /* Light red color */
+    background-color: #e28787; /* Light red color */
 }
 
 /* Modal styles */

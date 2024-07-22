@@ -259,5 +259,5 @@ function isExpiringSoon(expiryDate) {
     const expirationDate = new Date(expiryDate);
     const timeDifference = expirationDate - currentDate;
     const daysDifference = timeDifference / (1000 * 3600 * 24);
-    return daysDifference <= 14 && daysDifference >= 0;
+    return daysDifference <= 14;
 }
