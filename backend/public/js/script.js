@@ -140,8 +140,9 @@ function fetchAndDisplayData(endpoint, tableBodyId) {
         .then(data => {
             const tableBody = document.getElementById(tableBodyId);
             if (tableBody) {
-                tableBody.innerHTML = data.map(item => `
+                tableBody.innerHTML = data.map((item, index) => `
                     <tr>
+                        <td>${index + 1}</td>
                         <td>${item.name}</td>
                         <td>${item.model || item.id || formatDate(item.purchaseDate)}</td>
                         <td>${item.quantity || formatDate(item.purchaseDate)}</td>
