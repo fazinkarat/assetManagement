@@ -36,6 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
             deleteItem(event.target.dataset.endpoint, event.target.dataset.itemId);
         }
     });
+
+    // Event listeners for search inputs
+    document.getElementById('assetsSearch').addEventListener('input', () => searchTable('assetsTableBody', 'assetsSearch'));
+    document.getElementById('licensesSearch').addEventListener('input', () => searchTable('licensesTableBody', 'licensesSearch'));
+    document.getElementById('stocksSearch').addEventListener('input', () => searchTable('stocksTableBody', 'stocksSearch'));
 });
 
 function generateFieldsHtml(itemType) {
@@ -178,7 +183,12 @@ function deleteItem(endpoint, itemId) {
 
 function editItem(endpoint, itemId) {
     fetch(`${endpoint}/${itemId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to fetch item details');
+            }
+            return response.json();
+        })
         .then(item => {
             // Open modal
             const modal = document.getElementById('editModal');
@@ -206,7 +216,7 @@ function editItem(endpoint, itemId) {
         })
         .catch(error => {
             console.error('Error:', error);
-            alert('Failed to fetch item details');
+            alert(error.message);
         });
 }
 
@@ -260,4 +270,23 @@ function isExpiringSoon(expiryDate) {
     const timeDifference = expirationDate - currentDate;
     const daysDifference = timeDifference / (1000 * 3600 * 24);
     return daysDifference <= 14;
+}
+
+function searchTable(tableBodyId, searchInputId) {
+    const input = document.getElementById(searchInputId);
+    const filter = input.value.toLowerCase();
+    const tableBody = document.getElementById(tableBodyId);
+    const rows = tableBody.getElementsByTagName('tr');
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName('td');
+        let match = false;
+        for (let j = 0; j < cells.length; j++) {
+            if (cells[j].textContent.toLowerCase().indexOf(filter) > -1) {
+                match = true;
+                break;
+            }
+        }
+        rows[i].style.display = match ? '' : 'none';
+    }
 }
